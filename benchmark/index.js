@@ -12,21 +12,19 @@ const suite = new Benchmark.Suite;
 	suite.on( 'cycle', () => state = undefined );
 
 	function createReducerObjectOfNumKeys( numKeys ) {
-		const returnZero = () => 0;
-		const aToY = [
-			...Array( numKeys ).keys(),
-		].map( ( offset ) => String.fromCharCode( 97 + offset ) );
-		const reducers = {};
-		aToY.forEach( ( key ) => reducers[ key ] = returnZero );
-		return reducers;
+		return [ ...Array( numKeys ).keys() ].reduce( ( result, offset ) => {
+			const key = String.fromCharCode( 97 + offset );
+			result[ key ] = ( reducerState = 0 ) => reducerState;
+			return result;
+		}, {} );
 	}
 
 	[ 4, 20 ].forEach( ( numKeys ) => {
 		const unchangingReducer = combineReducers( createReducerObjectOfNumKeys( numKeys ) );
 		const changingReducer = ( () => {
 			const reducers = createReducerObjectOfNumKeys( numKeys );
-			// Pierce abstraction for worst-case scenario: Updated key is the last
-			// one to be considered (iterating in reverse).
+			// Pierce abstraction for worst-case scenario: Updated key is the
+			// last one to be considered (iterating in reverse).
 			reducers[ Object.keys( reducers )[ 0 ] ] = ( reducerState = 0 ) => reducerState + 1;
 			return combineReducers( reducers );
 		} )();
