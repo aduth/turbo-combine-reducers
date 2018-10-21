@@ -1,0 +1,11 @@
+{
+	"root": true,
+	"extends": "@aduth/eslint-config/es5",
+	"parserOptions": {
+		"ecmaVersion": 5,
+		"sourceType": "script"
+	},
+	"env": {
+		"node": true
+	}
+}
