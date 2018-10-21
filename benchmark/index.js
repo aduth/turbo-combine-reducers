@@ -7,7 +7,9 @@ const suite = new Benchmark.Suite;
 	[ 'redux', require( 'redux' ).combineReducers ],
 ].forEach( ( [ name, combineReducers ] ) => {
 	const action = { type: '__INERT__' };
+
 	let state;
+	suite.on( 'cycle', () => state = undefined );
 
 	function createReducerObjectOfNumKeys( numKeys ) {
 		const returnZero = () => 0;
@@ -19,36 +21,24 @@ const suite = new Benchmark.Suite;
 		return reducers;
 	}
 
-	const unchangingReducer = combineReducers( createReducerObjectOfNumKeys( 4 ) );
+	[ 4, 20 ].forEach( ( numKeys ) => {
+		const unchangingReducer = combineReducers( createReducerObjectOfNumKeys( numKeys ) );
+		const changingReducer = ( () => {
+			const reducers = createReducerObjectOfNumKeys( numKeys );
+			// Pierce abstraction for worst-case scenario: Updated key is the last
+			// one to be considered (iterating in reverse).
+			reducers[ Object.keys( reducers )[ 0 ] ] = ( reducerState = 0 ) => reducerState + 1;
+			return combineReducers( reducers );
+		} )();
 
-	const bigObjectUnchangingReducer = ( () => {
-		return combineReducers( createReducerObjectOfNumKeys( 20 ) );
-	} )();
-
-	const changingReducer = combineReducers( createReducerObjectOfNumKeys( 4 ) );
-
-	const bigObjectChangingReducer = ( () => {
-		const reducers = createReducerObjectOfNumKeys( 20 );
-		// Pierce abstraction for worst-case scenario: Updated key is the last
-		// one to be considered (iterating in reverse).
-		reducers[ Object.keys( reducers )[ 0 ] ] = ( reducerState = 0 ) => reducerState + 1;
-		return combineReducers( reducers );
-	} )();
-
-	suite
-		.add( name + ' - unchanging (4 properties)', () => {
-			unchangingReducer( state, action );
-		} )
-		.add( name + ' - unchanging (20 properties)', () => {
-			bigObjectUnchangingReducer( state, action );
-		} )
-		.add( name + ' - changing (4 properties)', () => {
-			changingReducer( state, action );
-		} )
-		.add( name + ' - changing (20 properties)', () => {
-			bigObjectChangingReducer( state, action );
-		} )
-		.on( 'cycle', () => state = undefined );
+		suite
+			.add( name + ' - unchanging (' + numKeys + ' properties)', () => {
+				unchangingReducer( state, action );
+			} )
+			.add( name + ' - changing (' + numKeys + ' properties)', () => {
+				changingReducer( state, action );
+			} );
+	} );
 } );
 
 suite
