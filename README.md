@@ -6,7 +6,7 @@ Drop-in replacement for [Redux's `combineReducers`](https://redux.js.org/api/com
 
 Applying a technique of [partial evaluation](https://en.wikipedia.org/wiki/Partial_evaluation) by pre-compiling a reducer updater function, it achieves upwards of **82x improved performance** for an assumed typical real-world scenario (unchanging state for a medium-size object). See [Benchmarks](#benchmarks) for specific performance metrics.
 
-Turbo Combine Reducers has no dependencies, and weighs in at **265 bytes** minified and gzipped.
+Turbo Combine Reducers has no dependencies, and weighs in at **260 bytes** minified and gzipped.
 
 ## Installation
 

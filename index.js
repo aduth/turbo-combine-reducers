@@ -7,19 +7,18 @@ function combineReducers( reducers ) {
 
 		fn = 'return {';
 		for ( i = 0; i < keys.length; i++ ) {
-			// `eval` security: The only dynamic contents are the reducer keys
-			// used as string literals of the object properties. To ensure that
-			// the property would not prematurely terminate the string literal
-			// token, and considering termination by its ending single quote,
-			// remove any single quotes of the key.
+			// Rely on Quoted escaping of JSON.stringify with guarantee that
+			// each member of Object.keys is a string.
 			//
-			// "A string literal is zero or more Unicode code points enclosed
-			// in single or double quotes."
+			// "If Type(value) is String, then return the result of calling the
+			// abstract operation Quote with argument value. [...] The abstract
+			// operation Quote(value) wraps a String value in double quotes and
+			// escapes characters within it."
 			//
-			// See: https://www.ecma-international.org/ecma-262/9.0/index.html#sec-literals-string-literals
-			key = keys[ i ].replace( /'/g, '' );
+			// https://www.ecma-international.org/ecma-262/5.1/#sec-15.12.3
+			key = JSON.stringify( keys[ i ] );
 
-			fn += '\'' + key + '\':r[\'' + key + '\'](s[\'' + key + '\'],a),';
+			fn += key + ':r[' + key + '](s[' + key + '],a),';
 		}
 		fn += '}';
 

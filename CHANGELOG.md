@@ -1,3 +1,9 @@
+## 1.0.2 (Unreleased)
+
+Bug Fixes
+
+- Further improve hardiness of key escaping leveraging `JSON.stringify` quoting behavior, avoiding remaining potential for runtime errors.
+
 ## 1.0.1 (2018-10-20)
 
 Bug Fixes

@@ -38,14 +38,9 @@ describe( 'combineReducers', () => {
 	} );
 
 	it( 'is not susceptible to evil', () => {
-		try {
-			combineReducers( {
-				'\\\':(function(){throw "EVIL"})()};//': () => 0,
-			} )();
-		} catch ( error ) {
-			if ( error === 'EVIL' ) {
-				throw error;
-			}
-		}
+		combineReducers( {
+			'\\\':(function(){throw "EVIL"})()};//': () => 0,
+			'\\': () => 0,
+		} )();
 	} );
 } );
