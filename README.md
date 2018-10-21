@@ -1,5 +1,7 @@
 # Turbo Combine Reducers
 
+[![Build Status](https://travis-ci.org/aduth/turbo-combine-reducers.svg?branch=master)](https://travis-ci.org/aduth/turbo-combine-reducers)
+
 Drop-in replacement for [Redux's `combineReducers`](https://redux.js.org/api/combinereducers), optimized for speed and bundle size.
 
 Applying a technique of [partial evaluation](https://en.wikipedia.org/wiki/Partial_evaluation) by pre-compiling a reducer updater function, it achieves upwards of **82x improved performance** for an assumed typical real-world scenario (unchanging state for a medium-size object). See [Benchmarks](#benchmarks) for specific performance metrics.
