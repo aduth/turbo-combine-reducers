@@ -1,6 +1,6 @@
 {
   "name": "turbo-combine-reducers",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Speed-optimized drop-in replacement for Redux's combineReducers",
   "main": "index.js",
   "scripts": {
