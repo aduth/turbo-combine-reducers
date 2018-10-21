@@ -11,13 +11,13 @@ function combineReducers( reducers ) {
 			// used as string literals of the object properties. To ensure that
 			// the property would not prematurely terminate the string literal
 			// token, and considering termination by its ending single quote,
-			// escape all single quotes of the key.
+			// remove any single quotes of the key.
 			//
 			// "A string literal is zero or more Unicode code points enclosed
 			// in single or double quotes."
 			//
 			// See: https://www.ecma-international.org/ecma-262/9.0/index.html#sec-literals-string-literals
-			key = keys[ i ].replace( /'/g, '\\\'' );
+			key = keys[ i ].replace( /'/g, '' );
 
 			fn += '\'' + key + '\':r[\'' + key + '\'](s[\'' + key + '\'],a),';
 		}
