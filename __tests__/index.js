@@ -40,6 +40,7 @@ describe( 'combineReducers', () => {
 	it( 'is not susceptible to evil', () => {
 		combineReducers( {
 			'\\\':(function(){throw "EVIL"})()};//': () => 0,
+			'\\":(function(){throw \'EVIL\'})()};//': () => 0,
 			'\\': () => 0,
 		} )();
 	} );
