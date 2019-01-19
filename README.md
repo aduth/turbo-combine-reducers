@@ -55,6 +55,6 @@ redux - changing (20 properties) x 589,844 ops/sec ±0.47% (92 runs sampled)
 
 ## License
 
-Copyright 2018 Andrew Duthie
+Copyright 2019 Andrew Duthie
 
 Released under the [MIT License](./LICENSE.md).
