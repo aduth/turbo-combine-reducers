@@ -8,6 +8,8 @@ Applying a technique of [partial evaluation](https://en.wikipedia.org/wiki/Parti
 
 Turbo Combine Reducers has no dependencies, and weighs in at **260 bytes** minified and gzipped.
 
+**Security Note:** The partial evaluation technique involves the use of [the `Function` constructor](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/Function) to work, which is a discouraged API due its security implications and incompatibility with common [Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP) configurations. While steps are taken to ensure that this risk is mitigated and it is safe to use, you are encouraged to perform your own security and risk assessments before using this library.
+
 ## Installation
 
 Using [npm](https://www.npmjs.com/) as a package manager:
